@@ -62,7 +62,7 @@ CREATE TABLE business_payments (
     razorpay_order_id VARCHAR(255) UNIQUE,
     razorpay_payment_id VARCHAR(255) UNIQUE,
     razorpay_signature VARCHAR(255),
-    amount DOUBLE NOT NULL,
+    amount NUMERIC(10,2) NOT NULL,
     plan_type VARCHAR(50) NOT NULL,
     status VARCHAR(50) NOT NULL, -- PENDING, COMPLETED, FAILED
     payment_method VARCHAR(50),

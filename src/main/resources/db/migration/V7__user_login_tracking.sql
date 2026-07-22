@@ -1,1 +1,1 @@
-ALTER TABLE app_users ADD COLUMN last_login_date DATETIME DEFAULT NULL;
+ALTER TABLE app_users ADD COLUMN last_login_date TIMESTAMP DEFAULT NULL;

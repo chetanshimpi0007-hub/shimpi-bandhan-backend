@@ -52,7 +52,7 @@ ALTER TABLE profiles
     ADD COLUMN partner_marriage_preference VARCHAR(100),
     ADD COLUMN partner_age_from INT,
     ADD COLUMN partner_age_to INT,
-    ADD COLUMN partner_height DOUBLE,
+    ADD COLUMN partner_height DOUBLE PRECISION,
     ADD COLUMN partner_education VARCHAR(255),
     ADD COLUMN partner_occupation VARCHAR(255),
     ADD COLUMN partner_city VARCHAR(100),
