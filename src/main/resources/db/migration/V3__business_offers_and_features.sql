@@ -11,10 +11,10 @@ CREATE TABLE business_offer (
     is_active BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
-    FOREIGN KEY (business_id) REFERENCES business(id)
+    FOREIGN KEY (business_id) REFERENCES businesses(id)
 );
 
-ALTER TABLE business
+ALTER TABLE businesses
     ADD COLUMN is_admin_featured BOOLEAN DEFAULT FALSE,
     ADD COLUMN priority_override INT DEFAULT 0,
     ADD COLUMN working_hours_json TEXT,
