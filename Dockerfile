@@ -6,6 +6,7 @@ COPY gradle/ gradle/
 COPY src/ src/
 
 # Build the application
+RUN chmod +x ./gradlew
 RUN ./gradlew build -x test
 
 FROM eclipse-temurin:17-jre-alpine
