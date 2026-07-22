@@ -1,0 +1,19 @@
+CREATE TABLE profile_photos (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    photo_url VARCHAR(500) NOT NULL,
+    thumbnail_url VARCHAR(500),
+    photo_type VARCHAR(50) NOT NULL, -- PRIMARY, GALLERY
+    status VARCHAR(50) NOT NULL, -- PENDING, APPROVED, REJECTED
+    rejection_reason VARCHAR(500),
+    is_primary BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    approved_by BIGINT,
+    approved_at TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES app_users(id),
+    FOREIGN KEY (approved_by) REFERENCES app_users(id)
+);
+
+CREATE INDEX idx_profile_photos_user_id ON profile_photos(user_id);
+CREATE INDEX idx_profile_photos_status ON profile_photos(status);

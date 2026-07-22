@@ -1,0 +1,113 @@
+-- V2__business_module.sql
+
+-- Enums are represented as VARCHAR in the database, but we can document the constraints or use Spring Boot EnumType.STRING
+
+CREATE TABLE business_categories (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP(6),
+    updated_at TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6)
+);
+
+CREATE TABLE businesses (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    owner_id BIGINT NOT NULL,
+    category_id BIGINT NOT NULL,
+    business_name VARCHAR(255) NOT NULL,
+    owner_name VARCHAR(255) NOT NULL,
+    mobile_number VARCHAR(20) NOT NULL,
+    whatsapp_number VARCHAR(20),
+    email VARCHAR(255),
+    description TEXT,
+    gst_number VARCHAR(50),
+    website VARCHAR(255),
+    instagram VARCHAR(255),
+    facebook VARCHAR(255),
+    youtube VARCHAR(255),
+    address_line TEXT,
+    city VARCHAR(100),
+    state VARCHAR(100),
+    pin_code VARCHAR(20),
+    google_maps_url TEXT,
+    logo_url TEXT,
+    cover_url TEXT,
+    working_hours VARCHAR(255),
+    years_of_experience INT,
+    status VARCHAR(50) NOT NULL, -- PENDING_PAYMENT, ACTIVE, EXPIRED, SUSPENDED, REJECTED, CANCELLED
+    is_verified BOOLEAN NOT NULL DEFAULT FALSE,
+    plan_type VARCHAR(50), -- BASIC, SILVER, GOLD, PLATINUM
+    created_at TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP(6),
+    updated_at TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+    FOREIGN KEY (owner_id) REFERENCES app_users(id),
+    FOREIGN KEY (category_id) REFERENCES business_categories(id)
+);
+
+CREATE TABLE business_subscriptions (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    business_id BIGINT NOT NULL,
+    plan_type VARCHAR(50) NOT NULL,
+    start_date TIMESTAMP(6),
+    expiry_date TIMESTAMP(6),
+    is_active BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP(6),
+    updated_at TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+    FOREIGN KEY (business_id) REFERENCES businesses(id)
+);
+
+CREATE TABLE business_payments (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    business_id BIGINT NOT NULL,
+    subscription_id BIGINT,
+    razorpay_order_id VARCHAR(255) UNIQUE,
+    razorpay_payment_id VARCHAR(255) UNIQUE,
+    razorpay_signature VARCHAR(255),
+    amount DOUBLE NOT NULL,
+    plan_type VARCHAR(50) NOT NULL,
+    status VARCHAR(50) NOT NULL, -- PENDING, COMPLETED, FAILED
+    payment_method VARCHAR(50),
+    created_at TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP(6),
+    FOREIGN KEY (business_id) REFERENCES businesses(id),
+    FOREIGN KEY (subscription_id) REFERENCES business_subscriptions(id)
+);
+
+CREATE TABLE business_gallery (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    business_id BIGINT NOT NULL,
+    image_url TEXT NOT NULL,
+    created_at TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP(6),
+    FOREIGN KEY (business_id) REFERENCES businesses(id)
+);
+
+CREATE TABLE business_reviews (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    business_id BIGINT NOT NULL,
+    user_id BIGINT NOT NULL,
+    rating INT NOT NULL CHECK (rating >= 1 AND rating <= 5),
+    title VARCHAR(255),
+    comment TEXT,
+    is_approved BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP(6),
+    updated_at TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+    FOREIGN KEY (business_id) REFERENCES businesses(id),
+    FOREIGN KEY (user_id) REFERENCES app_users(id)
+);
+
+CREATE TABLE business_leads (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    business_id BIGINT NOT NULL,
+    user_id BIGINT, -- Optional, if tracked for logged-in users
+    lead_type VARCHAR(50) NOT NULL, -- PHONE, WHATSAPP, WEBSITE, MAPS, VIEW
+    created_at TIMESTAMP(6) DEFAULT CURRENT_TIMESTAMP(6),
+    FOREIGN KEY (business_id) REFERENCES businesses(id),
+    FOREIGN KEY (user_id) REFERENCES app_users(id)
+);
+
+-- Default Categories (Seed Data)
+INSERT INTO business_categories (name) VALUES 
+('Clothing Shops'), ('Jewellery Shops'), ('Marriage Halls'), ('Caterers'),
+('Photographers'), ('Videographers'), ('Makeup Artists'), ('Mehendi Artists'),
+('Event Planners'), ('Decorators'), ('Flower Decoration'), ('DJ & Sound Systems'),
+('Travels'), ('Printing Press'), ('Invitation Card Designers'), ('Sweet Shops'),
+('Gift Shops'), ('Mandap Services'), ('Beauty Parlours'), ('Tailors'),
+('Fashion Designers'), ('Hotels'), ('Banquet Halls'), ('Honeymoon Travel Agencies');

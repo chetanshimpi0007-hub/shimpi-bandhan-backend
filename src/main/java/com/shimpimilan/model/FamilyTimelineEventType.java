@@ -1,0 +1,14 @@
+package com.shimpimilan.model;
+
+public enum FamilyTimelineEventType {
+    INTEREST_SENT,
+    INTEREST_ACCEPTED,
+    ROOM_CREATED,
+    FIRST_CHAT,
+    VOICE_CALL,
+    VIDEO_CALL,
+    MEETING_SCHEDULED,
+    MEETING_COMPLETED,
+    MARRIAGE_CONFIRMED,
+    SUCCESS_STORY_PUBLISHED
+}
