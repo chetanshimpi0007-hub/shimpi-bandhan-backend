@@ -32,8 +32,8 @@ public class EmailSenderJob {
     @Value("${spring.mail.username}")
     private String fromEmail;
 
-    // Run every 30 seconds to pick up emails quickly
-    @Scheduled(fixedDelay = 30000)
+    // Run every 60 seconds to pick up emails, wait 60s before starting to avoid startup timeout
+    @Scheduled(initialDelay = 60000, fixedDelay = 60000)
     @Transactional
     public void processEmailQueue() {
         List<NotificationQueue> pendingEmails = queueRepository.findEligiblePendingEmails();

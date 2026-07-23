@@ -7,7 +7,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "notification_queue")
+@Table(name = "notification_queue", indexes = {
+    @Index(name = "idx_status_retry", columnList = "status, next_retry_at")
+})
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
