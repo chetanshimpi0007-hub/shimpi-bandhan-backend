@@ -11,6 +11,6 @@ RUN ./gradlew build -x test
 
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
-COPY --from=builder /app/build/libs/*.jar app.jar
+COPY --from=builder /app/build/libs/shimpimilan-backend-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-Xmx256m", "-Xms256m", "-XX:MaxMetaspaceSize=128m", "-Xss512k", "-jar", "app.jar"]
