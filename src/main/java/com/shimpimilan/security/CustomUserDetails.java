@@ -36,7 +36,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return user.getStatus() != com.shimpimilan.model.UserStatus.SUSPENDED;
+        return true;
     }
 
     @Override
@@ -46,13 +46,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        if (user.getRole() == com.shimpimilan.model.Role.ADMIN) {
-            return true;
-        }
-        return user.getStatus() != com.shimpimilan.model.UserStatus.SUSPENDED &&
-               user.getStatus() != com.shimpimilan.model.UserStatus.BLOCKED &&
-               user.getStatus() != com.shimpimilan.model.UserStatus.REJECTED &&
-               user.getStatus() != com.shimpimilan.model.UserStatus.DELETED;
+        return true;
     }
     
     public User getUser() {

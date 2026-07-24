@@ -56,6 +56,16 @@ public class DatabaseSeeder implements CommandLineRunner {
                     .build();
             profileRepository.save(profile);
         }
+
+        // Ensure all ADMIN role users in database have APPROVED status
+        userRepository.findAll().stream()
+                .filter(u -> u.getRole() == Role.ADMIN)
+                .forEach(u -> {
+                    if (u.getStatus() != UserStatus.APPROVED) {
+                        u.setStatus(UserStatus.APPROVED);
+                        userRepository.save(u);
+                    }
+                });
     }
 
     private void seedMalePremium() {
