@@ -148,11 +148,13 @@ public class AuthService {
         User user = userRepository.findByPhone(request.getPhone())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        if (user.getStatus() == UserStatus.SUSPENDED) {
-            throw new RuntimeException("Account suspended");
-        }
-        if (user.getStatus() == UserStatus.REJECTED) {
-            throw new RuntimeException("Account rejected by admin");
+        if (user.getRole() != Role.ADMIN) {
+            if (user.getStatus() == UserStatus.SUSPENDED) {
+                throw new RuntimeException("Account suspended");
+            }
+            if (user.getStatus() == UserStatus.REJECTED) {
+                throw new RuntimeException("Account rejected by admin");
+            }
         }
 
         String jwtToken = jwtService.generateToken(new CustomUserDetails(user));
