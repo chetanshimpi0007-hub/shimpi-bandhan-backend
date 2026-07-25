@@ -16,6 +16,7 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     private final UserRepository userRepository;
     private final ProfileRepository profileRepository;
+    private final com.shimpimilan.repository.SuccessStoryRepository successStoryRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -25,6 +26,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         seedFemalePremium();
         seedMaleFree();
         seedFemaleFree();
+        seedSuccessStories();
     }
 
     private void seedAdmin() {
@@ -181,6 +183,80 @@ public class DatabaseSeeder implements CommandLineRunner {
                     .state("Maharashtra")
                     .build();
             profileRepository.save(profile);
+        }
+    }
+
+    private void seedSuccessStories() {
+        if (successStoryRepository.count() == 0) {
+            successStoryRepository.save(SuccessStory.builder()
+                    .brideName("Priya Shimpi")
+                    .groomName("Ramesh Shimpi")
+                    .weddingDate(LocalDate.of(2026, 5, 18))
+                    .city("Nashik")
+                    .shortStory("The compatibility scoring on Shimpi Bandhan matched us based on our exact sub-caste and lifestyle choices.")
+                    .story("We met on Shimpi Bandhan in November 2025. Our families connected over a family discussion room call, and after meeting in person at a community gathering in Nashik, we decided to get married in May 2026. The platform's verified badges and privacy features gave us complete peace of mind.")
+                    .photoUrl("/priya-ramesh.jpg")
+                    .galleryImages("/priya-ramesh.jpg,/wedding-couple.jpg,/shadi-couple.jpg")
+                    .displayOrder(1)
+                    .isFeatured(true)
+                    .isPublished(true)
+                    .build());
+
+            successStoryRepository.save(SuccessStory.builder()
+                    .brideName("Sonal Sankpal")
+                    .groomName("Shubham Sankpal")
+                    .weddingDate(LocalDate.of(2026, 2, 14))
+                    .city("Pune")
+                    .shortStory("We met on Shimpi Bandhan in November and got married in February. Verified badges made us feel completely secure.")
+                    .story("Finding a partner within the Namdev Shimpi community was very important for both our families. Shimpi Bandhan made it so effortless with precise filters. From our first chat to our engagement, everything felt seamless and trustworthy.")
+                    .photoUrl("/sonal-shubham-new.jpg")
+                    .galleryImages("/sonal-shubham-new.jpg,/hero-wedding.jpg,/newest-hero.jpg")
+                    .displayOrder(2)
+                    .isFeatured(true)
+                    .isPublished(true)
+                    .build());
+
+            successStoryRepository.save(SuccessStory.builder()
+                    .brideName("Pooja Shimpi")
+                    .groomName("Aniket Shimpi")
+                    .weddingDate(LocalDate.of(2025, 12, 10))
+                    .city("Mumbai")
+                    .shortStory("A traditional match powered by modern AI compatibility scoring. Grateful to Shimpi Bandhan for bringing us together!")
+                    .story("Aniket sent me an interest request on Shimpi Bandhan after seeing my verified profile. Our parents spoke the next day and arranged a family meet in Mumbai. Within two months, our wedding was fixed!")
+                    .photoUrl("/shadi-couple.jpg")
+                    .galleryImages("/shadi-couple.jpg,/priya-ramesh.jpg,/sonal-shubham-new.jpg")
+                    .displayOrder(3)
+                    .isFeatured(true)
+                    .isPublished(true)
+                    .build());
+
+            successStoryRepository.save(SuccessStory.builder()
+                    .brideName("Neha Shimpi")
+                    .groomName("Vikram Shimpi")
+                    .weddingDate(LocalDate.of(2025, 11, 25))
+                    .city("Aurangabad")
+                    .shortStory("Connected during the Pune Melava event! Shimpi Bandhan's digital platform made our communication smooth and secure.")
+                    .story("We first noticed each other's profiles on Shimpi Bandhan before attending the regional Shimpi Melava. Having full family approval and verified details beforehand made the meeting relaxed and memorable.")
+                    .photoUrl("/wedding-couple.jpg")
+                    .galleryImages("/wedding-couple.jpg,/shadi-couple.jpg,/hero-wedding.jpg")
+                    .displayOrder(4)
+                    .isFeatured(true)
+                    .isPublished(true)
+                    .build());
+
+            successStoryRepository.save(SuccessStory.builder()
+                    .brideName("Smita Shimpi")
+                    .groomName("Rajesh Shimpi")
+                    .weddingDate(LocalDate.of(2025, 9, 15))
+                    .city("Nagpur")
+                    .shortStory("Two Shimpi familiesunited across cities. Shimpi Bandhan made remote profile viewing and video calls super easy.")
+                    .story("Living in different cities made traditional matchmaking challenging until we created profiles on Shimpi Bandhan. The instant chat and video verification features helped us build trust quickly.")
+                    .photoUrl("/hero-wedding.jpg")
+                    .galleryImages("/hero-wedding.jpg,/newest-hero.jpg,/priya-ramesh.jpg")
+                    .displayOrder(5)
+                    .isFeatured(true)
+                    .isPublished(true)
+                    .build());
         }
     }
 }

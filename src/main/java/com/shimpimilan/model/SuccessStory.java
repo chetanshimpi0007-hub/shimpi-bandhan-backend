@@ -24,12 +24,28 @@ public class SuccessStory {
     private String brideName;
     private String groomName;
     private LocalDate weddingDate;
-    
+    private String city;
+
     @Column(columnDefinition = "TEXT")
-    private String story;
+    private String shortStory;
+
+    @Column(columnDefinition = "TEXT")
+    private String story; // Full Story
 
     private String photoUrl;
     private String videoUrl;
+
+    @Column(columnDefinition = "TEXT")
+    private String galleryImages; // Comma-separated or JSON list of gallery image URLs
+
+    @Builder.Default
+    private Boolean isFeatured = true;
+
+    @Builder.Default
+    private Integer displayOrder = 0;
+
+    @Builder.Default
+    private Boolean isPublished = true;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
