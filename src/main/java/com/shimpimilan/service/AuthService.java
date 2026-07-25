@@ -24,6 +24,7 @@ import java.util.Map;
 public class AuthService {
 
     private final UserRepository userRepository;
+    private final com.shimpimilan.repository.ProfileRepository profileRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -68,6 +69,17 @@ public class AuthService {
                 .build();
 
         user = userRepository.save(user);
+
+        // Create initial Profile with registered name and email
+        if (request.getName() != null || request.getEmail() != null) {
+            com.shimpimilan.model.Profile profile = com.shimpimilan.model.Profile.builder()
+                    .user(user)
+                    .fullName(request.getName())
+                    .email(request.getEmail())
+                    .verificationStatus(com.shimpimilan.model.profile.VerificationStatus.DRAFT)
+                    .build();
+            profileRepository.save(profile);
+        }
 
         if (user.getAccountType() == com.shimpimilan.model.AccountType.FAMILY) {
             if (request.getFamilyDetails() == null) {
