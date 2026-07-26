@@ -134,12 +134,18 @@ public class AuthService {
             
             // Generate JWT Token
             String jwtToken = jwtService.generateToken(new CustomUserDetails(user));
+            String userFullName = profileRepository.findByUserId(user.getId())
+                    .map(com.shimpimilan.model.Profile::getFullName)
+                    .orElse(null);
+
             return AuthResponse.builder()
                     .token(jwtToken)
                     .message("OTP verified successfully. Admin approval pending for full access.")
                     .user(AuthResponse.UserDto.builder()
                             .id(user.getId())
                             .phone(user.getPhone())
+                            .fullName(userFullName)
+                            .name(userFullName)
                             .role(user.getRole().name())
                             .status(user.getStatus().name())
                             .build())
@@ -170,12 +176,18 @@ public class AuthService {
         }
 
         String jwtToken = jwtService.generateToken(new CustomUserDetails(user));
+        String userFullName = profileRepository.findByUserId(user.getId())
+                .map(com.shimpimilan.model.Profile::getFullName)
+                .orElse(null);
+
         return AuthResponse.builder()
                 .token(jwtToken)
                 .message("Login successful")
                 .user(AuthResponse.UserDto.builder()
                         .id(user.getId())
                         .phone(user.getPhone())
+                        .fullName(userFullName)
+                        .name(userFullName)
                         .role(user.getRole().name())
                         .status(user.getStatus().name())
                         .build())

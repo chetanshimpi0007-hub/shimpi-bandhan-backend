@@ -21,6 +21,8 @@ public class AuthResponse {
     public static class UserDto {
         private Long id;
         private String phone;
+        private String fullName;
+        private String name;
         private String role;
         private String status;
     }
